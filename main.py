@@ -173,6 +173,10 @@ def main():
     RESULTS.mkdir(exist_ok=True); FIGURES.mkdir(exist_ok=True)
     torch.set_num_threads(1)
     data, info = prepare_data()
+    for name in ("train", "validation", "test"):
+        print(f"{name}: size={info[name]['size']}, classes={info[name]['class_counts']}")
+    print(f"train scaled mean: {info['train_scaled_mean']}")
+    print(f"train scaled std (ddof=0): {info['train_scaled_std_population']}")
     checks = check_shapes(data[0])
     criterion = nn.CrossEntropyLoss(reduction="mean")
     control = (data[0][0][:128], data[0][1][:128])
